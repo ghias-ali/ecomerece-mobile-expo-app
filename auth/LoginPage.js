@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 
-function Login() {
+function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -28,6 +28,7 @@ function Login() {
   };
   const onSubmit = () => {
     if (!checkValidation()) {
+      navigation.navigate("Home");
     } else {
       alert("Error");
     }
@@ -72,6 +73,12 @@ function Login() {
       <TouchableOpacity style={styles.loginBtn} onPress={() => onSubmit()}>
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>
+      <View style={styles.displayflex}>
+        <Text>Don't Have Account ? </Text>
+        <TouchableOpacity onPress={() => navigation.navigate("Sign Up")}>
+          <Text style={styles.siggnuptext}>Register</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -115,5 +122,12 @@ const styles = StyleSheet.create({
   },
   loginText: {
     color: "white",
+  },
+  displayflex: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  siggnuptext: {
+    color: "blue",
   },
 });
