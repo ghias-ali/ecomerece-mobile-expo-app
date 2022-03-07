@@ -2,18 +2,19 @@ import React from "react";
 import MyStack from "./navigation/index";
 import { StyleSheet, SafeAreaView } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
-import ProductsPage from "./screens/ProductsPage";
-
+import "react-native-gesture-handler";
 export default function App() {
   return (
     <SafeAreaView style={styles.container}>
-      <ProductsPage />
+      <NavigationContainer>
+        <MyStack />
+      </NavigationContainer>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  }
+    flex: 1,
+  },
 });

@@ -9,7 +9,7 @@ const messages = [
     title1: "Physics P1 and 2",
     subTitle: " ",
     subTitle1: " ",
-    image: require("../screens/Images/english.jpg"),
+    image: require("../screens/Images/english.jpg")
   },
   {
     id: 2,
@@ -17,7 +17,7 @@ const messages = [
     title1: "Chemistry P1, P2 & P3",
     subTitle: " ",
     subTitle1: " ",
-    image: require("../screens/Images/urdu.jpg"),
+    image: require("../screens/Images/urdu.jpg")
   },
   {
     id: 3,
@@ -25,7 +25,7 @@ const messages = [
     title1: "Physics P 1 and 2",
     subTitle: " ",
     subTitle1: " ",
-    image: require("../screens/Images/islamiyt.jpg"),
+    image: require("../screens/Images/islamiyt.jpg")
   },
   {
     id: 4,
@@ -33,7 +33,7 @@ const messages = [
     title1: "Pearson International ",
     subTitle: " ",
     subTitle1: " ",
-    image: require("../screens/Images/pak.jpg"),
+    image: require("../screens/Images/pak.jpg")
   },
   {
     id: 5,
@@ -41,7 +41,7 @@ const messages = [
     title1: "Pearson International ",
     subTitle: " ",
     subTitle1: " ",
-    image: require("../screens/Images/chemistry.jpg"),
+    image: require("../screens/Images/chemistry.jpg")
   },
   {
     id: 6,
@@ -49,8 +49,7 @@ const messages = [
     title1: "Physics P1 and 2",
     subTitle: " ",
     subTitle1: " ",
-    image: require("../screens/Images/physics.jpg"),
-
+    image: require("../screens/Images/physics.jpg")
   },
   {
     id: 7,
@@ -58,8 +57,7 @@ const messages = [
     title1: "Physics P1 and 2",
     subTitle: " ",
     subTitle1: " ",
-    image: require("../screens/Images/maths.jpg"),
-  
+    image: require("../screens/Images/maths.jpg")
   },
   {
     id: 8,
@@ -67,12 +65,11 @@ const messages = [
     title1: "Physics P1 and 2",
     subTitle: " ",
     subTitle1: " ",
-    image: require("../screens/Images/computer.jpg"),
-   
+    image: require("../screens/Images/computer.jpg")
   }
 ];
 
-export default function ProductsPage() {
+export default function ProductsPage({ navigation }) {
   return (
     <FlatList
       showsHorizontalScrollIndicator={false}
@@ -85,7 +82,7 @@ export default function ProductsPage() {
           subTitle={item.subTitle}
           subTitle1={item.subTitle1}
           image={item.image}
-         
+          navigation={navigation}
         />
       )}
     />

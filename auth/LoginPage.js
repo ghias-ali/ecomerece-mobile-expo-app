@@ -5,10 +5,10 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Image,
+  Image
 } from "react-native";
 
-function Login() {
+function Login({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -28,6 +28,7 @@ function Login() {
   };
   const onSubmit = () => {
     if (!checkValidation()) {
+      navigation.navigate("Home1");
     } else {
       alert("Error");
     }
@@ -37,7 +38,7 @@ function Login() {
       <Image
         style={styles.logo}
         source={{
-          uri: "http://www.kitabank.com/uploads/cms/logo.png",
+          uri: "http://www.kitabank.com/uploads/cms/logo.png"
         }}
       />
       <View style={styles.inputView}>
@@ -72,6 +73,12 @@ function Login() {
       <TouchableOpacity style={styles.loginBtn} onPress={() => onSubmit()}>
         <Text style={styles.loginText}>LOGIN</Text>
       </TouchableOpacity>
+      <View style={styles.displayflex}>
+        <Text>Don't Have Account ? </Text>
+        <TouchableOpacity onPress={() => navigation.navigate("Sign Up")}>
+          <Text style={styles.siggnuptext}>Register</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -80,11 +87,11 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 100,
+    paddingTop: 100
   },
   logo: {
     height: 200,
-    width: 200,
+    width: 200
   },
   inputView: {
     width: "80%",
@@ -93,11 +100,11 @@ const styles = StyleSheet.create({
     height: 50,
     marginBottom: 20,
     justifyContent: "center",
-    padding: 20,
+    padding: 20
   },
   inputText: {
     height: 50,
-    color: "black",
+    color: "black"
   },
   loginBtn: {
     width: "50%",
@@ -107,13 +114,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 5,
-    marginBottom: 10,
+    marginBottom: 10
   },
   errorIndicator: {
     margin: 0,
-    color: "#ff0000",
+    color: "#ff0000"
   },
   loginText: {
-    color: "white",
+    color: "white"
   },
+  displayflex: {
+    display: "flex",
+    flexDirection: "row"
+  },
+  siggnuptext: {
+    color: "blue"
+  }
 });

@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Image,
   Text,
-  Button,
   TouchableOpacity
 } from "react-native";
 
@@ -15,22 +14,25 @@ export default function ListItem({
   image,
   onPress,
   title1,
-  subTitle1
+  subTitle1,
+  navigation
 }) {
   return (
-    <SafeAreaView  >
-   
+    <SafeAreaView>
       <View style={styles.container} onPress={onPress}>
         <View style={styles.image444}>
           <View style={styles.back}>
-            <Image style={styles.image}  source={image} />
+            <Image style={styles.image} source={image} />
             <Text style={styles.title}>{title}</Text>
             <Text style={styles.subTitle}>{subTitle}</Text>
             <View style={styles.btndiv}>
               <TouchableOpacity style={styles.btn}>
                 <Text style={styles.red}>Read</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.btn}>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => navigation.navigate("ProductDetails")}
+              >
                 <Text style={styles.red}>Details</Text>
               </TouchableOpacity>
             </View>
@@ -43,14 +45,16 @@ export default function ListItem({
               <TouchableOpacity style={styles.btn}>
                 <Text style={styles.red}>Read</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.btn}>
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => navigation.navigate("ProductDetails")}
+              >
                 <Text style={styles.red}>Details</Text>
               </TouchableOpacity>
             </View>
           </View>
         </View>
       </View>
-  
     </SafeAreaView>
   );
 }
@@ -58,11 +62,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 15,
-    borderRadius: 10,
-    
+    borderRadius: 10
   },
-  container22:{
-marginTop: 20
+  container22: {
+    marginTop: 20
   },
   image444: {
     flexDirection: "row",
