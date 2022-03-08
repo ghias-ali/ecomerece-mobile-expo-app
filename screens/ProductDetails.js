@@ -78,7 +78,10 @@ export default function ProductDetails({ route, navigation }) {
         </View>
         <View style={styles.line}></View>
         <View style={styles.addveiw}>
-          <TouchableOpacity style={styles.cartbtn}   onPress={() => navigation.navigate("Cart")} >
+          <TouchableOpacity
+            style={styles.cartbtn}
+            onPress={() => navigation.navigate("Cart")}
+          >
             <View style={styles.cartttt}>
               <Text style={styles.add}>Add to cart</Text>
               <FontAwesome
@@ -91,7 +94,10 @@ export default function ProductDetails({ route, navigation }) {
               />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.cartbtn} onPress={() => navigation.navigate("Favourite")}>
+          <TouchableOpacity
+            style={styles.cartbtn}
+            onPress={() => navigation.navigate("Favourite")}
+          >
             <View style={styles.cartttt}>
               <Text style={styles.add}>Favourite</Text>
               <AntDesign

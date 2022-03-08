@@ -1,102 +1,119 @@
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   FlatList,
   View,
   Text,
   StyleSheet,
   TouchableOpacity,
-  ScrollView
+  RefreshControl,
 } from "react-native";
 import ListCart from "./ListCart";
-const messages = [
-  {
-    id: 1,
-    title: "Mathematics P1,P2 & P3",
-    subTitle: "Physics P1 and 2 ",
-    Price: "1250 Rs",
-    image: require("../screens/Images/english.jpg")
-  },
-  {
-    id: 2,
-    title: "Mathematics P1,P2 & P3",
-    subTitle: "Chemistry P1, P2 & P3 ",
-    Price: "1250 Rs",
-    image: require("../screens/Images/urdu.jpg")
-  },
-  {
-    id: 3,
-    title: "Mathematics P1,P2 & P3",
-    subTitle: "Chemistry P1, P2 & P3 ",
-    Price: "1250 Rs",
-    image: require("../screens/Images/urdu.jpg")
-  },
-  {
-    id: 4,
-    title: "Mathematics P1,P2 & P3",
-    subTitle: "Chemistry P1, P2 & P3 ",
-    Price: "1250 Rs",
-    image: require("../screens/Images/urdu.jpg")
-  },
-  {
-    id: 5,
-    title: "Mathematics P1,P2 & P3",
-    subTitle: "Chemistry P1, P2 & P3 ",
-    Price: "1250 Rs",
-    image: require("../screens/Images/urdu.jpg")
-  },
-  {
-    id: 6,
-    title: "Mathematics P1,P2 & P3",
-    subTitle: "Chemistry P1, P2 & P3 ",
-    Price: "1250 Rs",
-    image: require("../screens/Images/urdu.jpg")
-  },
-  {
-    id: 7,
-    title: "Mathematics P1,P2 & P3",
-    subTitle: "Chemistry P1, P2 & P3 ",
-    Price: "1250 Rs",
-    image: require("../screens/Images/urdu.jpg")
-  }
-];
+import { cart } from "../config/axios";
+import { useSelector } from "react-redux";
+import { cartDelete } from "../config/axios";
+
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
 
 export default function CartPage({ navigation }) {
-  return (
-    <View>
-      <FlatList
-        style={styles.list}
-        showsHorizontalScrollIndicator={false}
-        data={messages}
-        keyExtractor={(messages) => messages.id.toString()}
-        renderItem={({ item }) => (
-          <ListCart
-            title={item.title}
-            subTitle={item.subTitle}
-            Price={item.Price}
-            image={item.image}
-            navigation={navigation}
-          />
-        )}
-      />
-      <View style={styles.container}>
-        <View style={styles.costview}>
-          <Text>Total Cost:</Text>
-          <Text>1250 Rs</Text>
-        </View>
+  const user = useSelector((state) => state.authReducer.user);
+  const refresh = useSelector((state) => state.authReducer.refresh);
+  const [refreshing, setRefreshing] = useState(false);
 
-        <View style={styles.check}>
-          <TouchableOpacity>
-            <Text style={styles.checktext}>CHECKOUT</Text>
-          </TouchableOpacity>
-        </View>
+  const [data, setdata] = useState([]);
+  const [totalprice, settotalprice] = useState(0);
+  const [updated, setupdated] = useState(false);
+  const [loading, setloading] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
+  const onClickDelete = (id) => {
+    cartDelete(`${id}`, {})
+      .then(() => {
+        setupdated(!updated);
+      })
+      .catch(() => {
+        alert("delet cart error");
+      });
+  };
+
+  useEffect(() => {
+    setloading(true);
+    cart(`${user.id}`, {
+      method: "get",
+    })
+      .then((res) => {
+        setdata(res.data.list);
+        let arr = res.data.list;
+        let sum = 0;
+        for (let j = 0; j < arr.length; j++) {
+          sum = parseInt(arr[j].price) + sum;
+        }
+
+        settotalprice(sum);
+        setloading(false);
+      })
+      .catch(() => {
+        alert("Cart Not Found");
+        setloading(false);
+      });
+  }, [updated, refresh, refreshing]);
+
+  return (
+    <RefreshControl refreshing={refreshing} onRefresh={onRefresh}>
+      <View>
+        {loading ? (
+          <View
+            style={{
+              textAlign: "center",
+            }}
+          >
+            <Text>Loading...</Text>
+          </View>
+        ) : (
+          <View>
+            <FlatList
+              style={styles.list}
+              showsHorizontalScrollIndicator={false}
+              data={data}
+              keyExtractor={(data) => data.id.toString()}
+              renderItem={({ item }) => (
+                <ListCart
+                  bookId={item.book_id}
+                  navigation={navigation}
+                  deleteBook={onClickDelete}
+                  idOfCart={item.id}
+                />
+              )}
+            />
+            <View style={styles.container}>
+              <View style={styles.costview}>
+                <Text>Total Cost:</Text>
+                <Text>{totalprice} Rs</Text>
+              </View>
+
+              <View style={styles.check}>
+                <TouchableOpacity>
+                  <Text style={styles.checktext}>CHECKOUT</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        )}
       </View>
-    </View>
+    </RefreshControl>
   );
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 5
+    padding: 5,
+    position: "absolute",
+    alignSelf: "center",
+    bottom: 0,
   },
   costview: {
     flexDirection: "row",
@@ -106,7 +123,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: 350,
     marginTop: -110,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   check: {
     padding: 5,
@@ -116,15 +133,15 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: 350,
     marginTop: -40,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   checktext: {
     fontSize: 20,
     color: "white",
     textAlign: "center",
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   list: {
-    marginBottom: 112
-  }
+    marginBottom: 112,
+  },
 });

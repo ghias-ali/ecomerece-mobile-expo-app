@@ -8,6 +8,9 @@ import {
   TouchableOpacity,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { addToCart } from "../config/axios";
+import { useSelector, useDispatch } from "react-redux";
+import { setRefreshdata } from "../redux/actions";
 
 export default function ListItem({
   title,
@@ -17,6 +20,23 @@ export default function ListItem({
   id,
   navigation,
 }) {
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.authReducer.user);
+  const refresh = useSelector((state) => state.authReducer.refresh);
+
+  const addtocart = () => {
+    addToCart(`${id}/${user.id}`, {
+      method: "post",
+    })
+      .then((res) => {
+        console.log("added");
+        dispatch(setRefreshdata(!refresh));
+      })
+      .catch(() => {
+        alert("add to cart error");
+      });
+  };
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -45,13 +65,15 @@ export default function ListItem({
               {price}
               {" Rs"}
             </Text>
-            <FontAwesome
-              style={{
-                color: "rgb(255,79,129)",
-                fontSize: 25,
-              }}
-              name="cart-plus"
-            />
+            <TouchableOpacity onPress={() => addtocart()}>
+              <FontAwesome
+                style={{
+                  color: "rgb(255,79,129)",
+                  fontSize: 25,
+                }}
+                name="cart-plus"
+              />
+            </TouchableOpacity>
           </View>
         </View>
       </View>

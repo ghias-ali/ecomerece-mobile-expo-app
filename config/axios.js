@@ -49,4 +49,39 @@ register.interceptors.request.use(
   }
 );
 
-export { login, bookscat, bookDetail, register };
+const cart = axios.create({
+  baseURL: `${url}/cart/`,
+});
+cart.interceptors.request.use(
+  (req) => {
+    return req;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
+
+const cartDelete = axios.create({
+  baseURL: `${url}/user/cart/delete/`,
+});
+cartDelete.interceptors.request.use(
+  (req) => {
+    return req;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
+
+const addToCart = axios.create({
+  baseURL: `${url}/add-to-Cart/`,
+});
+addToCart.interceptors.request.use(
+  (req) => {
+    return req;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
+export { login, bookscat, bookDetail, register, cart, cartDelete, addToCart };

@@ -13,3 +13,9 @@ export const setUserData = (payload) => (dispatch) => {
     payload,
   });
 };
+export const setRefreshdata = (payload) => (dispatch) => {
+  dispatch({
+    type: t.SET_REFRESH,
+    payload,
+  });
+};
