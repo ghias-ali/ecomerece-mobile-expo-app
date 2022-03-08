@@ -5,17 +5,22 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Image
+  Image,
 } from "react-native";
+import { useDispatch } from "react-redux";
+import { login } from "../config/axios";
+import { setUserData } from "../redux/actions";
 
 function Login({ navigation }) {
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+
   const checkValidation = () => {
     let error = false;
-    console.log("CALLED");
     if (email === "") {
       setEmailError("This field is required");
       error = true;
@@ -28,7 +33,21 @@ function Login({ navigation }) {
   };
   const onSubmit = () => {
     if (!checkValidation()) {
-      navigation.navigate("Home1");
+      const user = { email, password };
+
+      login({
+        method: "post",
+        data: user,
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((res) => {
+          dispatch(setUserData(res.data.user));
+
+          navigation.navigate("Home1");
+        })
+        .catch(() => {
+          alert("Email or Password is incorrect!");
+        });
     } else {
       alert("Error");
     }
@@ -38,7 +57,7 @@ function Login({ navigation }) {
       <Image
         style={styles.logo}
         source={{
-          uri: "http://www.kitabank.com/uploads/cms/logo.png"
+          uri: "http://www.kitabank.com/uploads/cms/logo.png",
         }}
       />
       <View style={styles.inputView}>
@@ -87,11 +106,11 @@ const styles = StyleSheet.create({
   container: {
     alignItems: "center",
     justifyContent: "center",
-    paddingTop: 100
+    paddingTop: 100,
   },
   logo: {
     height: 200,
-    width: 200
+    width: 200,
   },
   inputView: {
     width: "80%",
@@ -100,11 +119,11 @@ const styles = StyleSheet.create({
     height: 50,
     marginBottom: 20,
     justifyContent: "center",
-    padding: 20
+    padding: 20,
   },
   inputText: {
     height: 50,
-    color: "black"
+    color: "black",
   },
   loginBtn: {
     width: "50%",
@@ -114,20 +133,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 5,
-    marginBottom: 10
+    marginBottom: 10,
   },
   errorIndicator: {
     margin: 0,
-    color: "#ff0000"
+    color: "#ff0000",
   },
   loginText: {
-    color: "white"
+    color: "white",
   },
   displayflex: {
     display: "flex",
-    flexDirection: "row"
+    flexDirection: "row",
   },
   siggnuptext: {
-    color: "blue"
-  }
+    color: "blue",
+  },
 });

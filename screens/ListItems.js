@@ -5,53 +5,53 @@ import {
   StyleSheet,
   Image,
   Text,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 export default function ListItem({
   title,
   subTitle,
   image,
-  onPress,
-  title1,
-  subTitle1,
-  navigation
+  price,
+  id,
+  navigation,
 }) {
   return (
     <SafeAreaView>
-      <View style={styles.container} onPress={onPress}>
-        <View style={styles.image444}>
-          <View style={styles.back}>
-            <Image style={styles.image} source={image} />
-            <Text style={styles.title}>{title}</Text>
-            <Text style={styles.subTitle}>{subTitle}</Text>
-            <View style={styles.btndiv}>
-              <TouchableOpacity style={styles.btn}>
-                <Text style={styles.red}>Read</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.btn}
-                onPress={() => navigation.navigate("ProductDetails")}
-              >
-                <Text style={styles.red}>Details</Text>
-              </TouchableOpacity>
-            </View>
+      <View style={styles.container}>
+        <View style={styles.back}>
+          <Image
+            style={styles.image}
+            source={{
+              uri: `https://kitabank.studentsresource.net/${image}`,
+            }}
+          />
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.subTitle}>{subTitle}</Text>
+          <View style={styles.btndiv}>
+            <TouchableOpacity style={styles.btn}>
+              <Text style={styles.red}>Read</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.btn}
+              onPress={() => navigation.navigate("ProductDetails", { id: id })}
+            >
+              <Text style={styles.red}>Details</Text>
+            </TouchableOpacity>
           </View>
-          <View style={styles.back}>
-            <Image style={styles.image} source={image} />
-            <Text style={styles.title}>{title1}</Text>
-            <Text style={styles.subTitle}>{subTitle1}</Text>
-            <View style={styles.btndiv}>
-              <TouchableOpacity style={styles.btn}>
-                <Text style={styles.red}>Read</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.btn}
-                onPress={() => navigation.navigate("ProductDetails")}
-              >
-                <Text style={styles.red}>Details</Text>
-              </TouchableOpacity>
-            </View>
+          <View style={styles.cartdiv}>
+            <Text style={styles.title1}>
+              {price}
+              {" Rs"}
+            </Text>
+            <FontAwesome
+              style={{
+                color: "rgb(255,79,129)",
+                fontSize: 25,
+              }}
+              name="cart-plus"
+            />
           </View>
         </View>
       </View>
@@ -62,53 +62,75 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 15,
-    borderRadius: 10
+    borderRadius: 10,
   },
   container22: {
-    marginTop: 20
+    marginTop: 20,
   },
-  image444: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
+
   image: {
     width: 145,
-    height: 140
+    height: 140,
+    alignSelf: "center",
   },
   title: {
     fontSize: 12,
     lineHeight: 23,
     fontWeight: "bold",
     color: "black",
-    margin: 5
+    // margin: 5,
+    marginTop: 5,
+  },
+  title1: {
+    fontSize: 12,
+    lineHeight: 23,
+    fontWeight: "bold",
+    color: "black",
+    // margin: 5,
+    marginTop: 5,
+    color: "green",
   },
   subTitle: {
     fontSize: 10,
-    lineHeight: 23,
-    color: "#515450"
+    lineHeight: 30,
+    marginTop: -5,
+    color: "#515450",
   },
   back: {
     backgroundColor: "#FFFFFF",
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    height: 225
+    height: "auto",
+    width: 150,
+    padding: 10,
   },
   btn: {
     width: 50,
     padding: 2,
     backgroundColor: "rgb(248,26,26)",
-    borderRadius: 10
+    borderRadius: 10,
   },
   btndiv: {
     flexDirection: "row",
     justifyContent: "space-around",
-    alignItems: "center"
+    alignItems: "center",
   },
   red: {
     color: "white",
     textAlign: "center",
-    fontSize: 11
-  }
+    fontSize: 11,
+  },
+  cartdiv: {
+    borderTopColor: "gray",
+    borderWidth: 0.2,
+    marginTop: 10,
+    borderBottomWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
 });
