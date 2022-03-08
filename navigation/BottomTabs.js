@@ -4,14 +4,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ProductsPage from "../screens/ProductsPage";
 // import ProductDetails from "../screens/ProductDetails";
 
-function HomeScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Home!</Text>
-    </View>
-  );
-}
-
 function SettingsScreen({ navigation }) {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>

@@ -7,7 +7,13 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
+
+import { register } from "../config/axios";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../redux/actions";
 function SignUp({ navigation }) {
+  const dispatch = useDispatch();
+
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -20,7 +26,6 @@ function SignUp({ navigation }) {
 
   const checkValidation = () => {
     let error = false;
-    console.log("CALLED");
     if (email === "") {
       setEmailError("This field is required");
       error = true;
@@ -41,6 +46,25 @@ function SignUp({ navigation }) {
   };
   const onSubmit = () => {
     if (!checkValidation()) {
+      const user = {
+        email: email,
+        password: password,
+        c_password: password,
+        name: name,
+      };
+      register({
+        method: "post",
+        data: user,
+        headers: { "Content-Type": "application/json" },
+      })
+        .then((res) => {
+          dispatch(setUserData(res.data.user));
+
+          navigation.navigate("Home1");
+        })
+        .catch(() => {
+          alert("Error Occured! Try again later");
+        });
     } else {
       alert("Error");
     }
