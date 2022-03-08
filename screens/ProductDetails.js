@@ -10,7 +10,7 @@ import {
 import { bookDetail } from "../config/axios";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-export default function ProductDetails({ route }) {
+export default function ProductDetails({ route, navigation }) {
   const { id } = route.params;
 
   const [data, setdata] = useState({});
@@ -78,7 +78,7 @@ export default function ProductDetails({ route }) {
         </View>
         <View style={styles.line}></View>
         <View style={styles.addveiw}>
-          <TouchableOpacity style={styles.cartbtn}>
+          <TouchableOpacity style={styles.cartbtn}   onPress={() => navigation.navigate("Cart")} >
             <View style={styles.cartttt}>
               <Text style={styles.add}>Add to cart</Text>
               <FontAwesome
@@ -91,7 +91,7 @@ export default function ProductDetails({ route }) {
               />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.cartbtn}>
+          <TouchableOpacity style={styles.cartbtn} onPress={() => navigation.navigate("Favourite")}>
             <View style={styles.cartttt}>
               <Text style={styles.add}>Favourite</Text>
               <AntDesign

@@ -1,9 +1,8 @@
 import React from "react";
 import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
-import Entypo from "react-native-vector-icons/Entypo";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
-export default function ListCart({
+export default function ListFav({
   title,
   subTitle,
   image,
@@ -13,7 +12,7 @@ export default function ListCart({
 }) {
   return (
     <View style={styles.container} onPress={onPress}>
-      <View style={styles.image4445}>
+      <View style={styles.image44455}>
         <View>
           <Image style={styles.image133} source={image} />
         </View>
@@ -21,29 +20,6 @@ export default function ListCart({
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subTitle}>{subTitle}</Text>
           <Text style={styles.Price}>{Price}</Text>
-          <View style={styles.pusview}>
-            <TouchableOpacity>
-              <Entypo
-                style={{
-                  color: "rgb(255,79,129)",
-                  fontSize: 25,
-                  marginLeft: 8
-                }}
-                name="circle-with-minus"
-              />
-            </TouchableOpacity>
-            <Text style={styles.no}>1</Text>
-            <TouchableOpacity>
-              <Entypo
-                style={{
-                  color: "rgb(255,79,129)",
-                  fontSize: 25,
-                  marginLeft: 8
-                }}
-                name="circle-with-plus"
-              />
-            </TouchableOpacity>
-          </View>
           <View>
             <TouchableOpacity>
               <AntDesign
@@ -52,7 +28,7 @@ export default function ListCart({
                   fontSize: 20,
                   marginLeft: 8,
                   position: "absolute",
-                  marginTop: 40
+                  marginTop: 20
                 }}
                 name="delete"
               />
@@ -65,12 +41,11 @@ export default function ListCart({
 }
 const styles = StyleSheet.create({
   container: {
- 
     padding: 5,
     marginTop: -2,
     marginBottom: -6
   },
-  image4445: {
+  image44455: {
     flexDirection: "row",
     backgroundColor: "white",
     shadowOpacity: 0.25,
@@ -101,14 +76,5 @@ const styles = StyleSheet.create({
     lineHeight: 23,
     color: "green",
     marginLeft: 8
-  },
-  pusview: {
-    flexDirection: "row",
-    position: "absolute",
-    marginTop: 85
-  },
-  no: {
-    color: "grey",
-    marginLeft: 5
   }
 });
