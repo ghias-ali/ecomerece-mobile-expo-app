@@ -2,7 +2,7 @@ import * as React from "react";
 import { Text, View, TouchableOpacity } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ProductsPage from "../screens/ProductsPage";
-// import ProductDetails from "../screens/ProductDetails";
+import CartPage from "../screens/CartPage"
 
 function HomeScreen() {
   return (
@@ -32,6 +32,11 @@ function MyTabs() {
         name="Products"
         component={ProductsPage}
       />
+      <Tab.Screen
+      options={{ headerShown: false }}
+      name="Cart"
+      component={CartPage}
+    />
       <Tab.Screen
         options={{ headerShown: false }}
         name="Settings"
