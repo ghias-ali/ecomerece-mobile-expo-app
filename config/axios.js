@@ -84,4 +84,52 @@ addToCart.interceptors.request.use(
     return Promise.reject(err);
   }
 );
-export { login, bookscat, bookDetail, register, cart, cartDelete, addToCart };
+
+const addToFav = axios.create({
+  baseURL: `${url}/add-to-favourite/`,
+});
+addToFav.interceptors.request.use(
+  (req) => {
+    return req;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
+
+const getFav = axios.create({
+  baseURL: `${url}/favourite/`,
+});
+getFav.interceptors.request.use(
+  (req) => {
+    return req;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
+
+const deleteFav = axios.create({
+  baseURL: `${url}/user/favourite/delete/`,
+});
+deleteFav.interceptors.request.use(
+  (req) => {
+    return req;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
+
+export {
+  login,
+  bookscat,
+  bookDetail,
+  register,
+  cart,
+  cartDelete,
+  addToCart,
+  addToFav,
+  getFav,
+  deleteFav,
+};

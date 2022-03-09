@@ -19,3 +19,10 @@ export const setRefreshdata = (payload) => (dispatch) => {
     payload,
   });
 };
+
+export const setRefreshFav = (payload) => (dispatch) => {
+  dispatch({
+    type: t.SET_REFRESH_FAV,
+    payload,
+  });
+};

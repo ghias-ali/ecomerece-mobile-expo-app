@@ -7,13 +7,36 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import { bookDetail } from "../config/axios";
+import { bookDetail, addToFav } from "../config/axios";
+import { useSelector, useDispatch } from "react-redux";
+import { setRefreshFav } from "../redux/actions";
+
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+
 export default function ProductDetails({ route, navigation }) {
+  const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.authReducer.user);
+  const refreshfav = useSelector((state) => state.authReducer.refreshfav);
+
   const { id } = route.params;
 
   const [data, setdata] = useState({});
+
+  const onAddtoFav = () => {
+    addToFav(`${id}/${user.id}`, {
+      method: "post",
+    })
+      .then(() => {
+        dispatch(setRefreshFav(!refreshfav));
+
+        navigation.navigate("Favourite");
+      })
+      .catch(() => {
+        alert("Add to Favourites error");
+      });
+  };
 
   useEffect(() => {
     bookDetail(`${id}`, {
@@ -23,7 +46,7 @@ export default function ProductDetails({ route, navigation }) {
         setdata(res.data.book);
       })
       .catch(() => {
-        alert("Email or Password is incorrect!");
+        alert("book detail error");
       });
   }, []);
 
@@ -94,10 +117,7 @@ export default function ProductDetails({ route, navigation }) {
               />
             </View>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.cartbtn}
-            onPress={() => navigation.navigate("Favourite")}
-          >
+          <TouchableOpacity style={styles.cartbtn} onPress={() => onAddtoFav()}>
             <View style={styles.cartttt}>
               <Text style={styles.add}>Favourite</Text>
               <AntDesign

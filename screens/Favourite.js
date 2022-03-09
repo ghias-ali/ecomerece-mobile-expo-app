@@ -1,84 +1,68 @@
-import React from "react";
-import {
-  FlatList,
-  StyleSheet,
-} from "react-native";
+import React, { useState, useEffect, useCallback } from "react";
+import { FlatList, StyleSheet, RefreshControl } from "react-native";
 import ListFav from "./ListFav";
-const messages = [
-  {
-    id: 1,
-    title: "Mathematics P1,P2 & P3",
-    subTitle: "Physics P1 and 2 ",
-    Price: "1250 Rs",
-    image: require("../screens/Images/english.jpg")
-  },
-  {
-    id: 2,
-    title: "Mathematics P1,P2 & P3",
-    subTitle: "Chemistry P1, P2 & P3 ",
-    Price: "1250 Rs",
-    image: require("../screens/Images/urdu.jpg")
-  },
-  {
-    id: 3,
-    title: "Mathematics P1,P2 & P3",
-    subTitle: "Chemistry P1, P2 & P3 ",
-    Price: "1250 Rs",
-    image: require("../screens/Images/urdu.jpg")
-  },
-  {
-    id: 4,
-    title: "Mathematics P1,P2 & P3",
-    subTitle: "Chemistry P1, P2 & P3 ",
-    Price: "1250 Rs",
-    image: require("../screens/Images/urdu.jpg")
-  },
-  {
-    id: 5,
-    title: "Mathematics P1,P2 & P3",
-    subTitle: "Chemistry P1, P2 & P3 ",
-    Price: "1250 Rs",
-    image: require("../screens/Images/urdu.jpg")
-  },
-  {
-    id: 6,
-    title: "Mathematics P1,P2 & P3",
-    subTitle: "Chemistry P1, P2 & P3 ",
-    Price: "1250 Rs",
-    image: require("../screens/Images/urdu.jpg")
-  },
-  {
-    id: 7,
-    title: "Mathematics P1,P2 & P3",
-    subTitle: "Chemistry P1, P2 & P3 ",
-    Price: "1250 Rs",
-    image: require("../screens/Images/urdu.jpg")
-  }
-];
+import { getFav, deleteFav } from "../config/axios";
+import { useSelector } from "react-redux";
 
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
 export default function Favourite({ navigation }) {
+  const user = useSelector((state) => state.authReducer.user);
+  const refreshfav = useSelector((state) => state.authReducer.refreshfav);
+
+  const [data, setdata] = useState([]);
+  const [updated, setupdated] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
+
+  const onClickDelete = (id) => {
+    deleteFav(`${id}`, {})
+      .then(() => {
+        setupdated(!updated);
+      })
+      .catch(() => {
+        alert("delet cart error");
+      });
+  };
+
+  useEffect(() => {
+    getFav(`${user.id}`, {
+      method: "get",
+    })
+      .then((res) => {
+        setdata(res.data.list);
+      })
+      .catch(() => {
+        alert("Favourites error");
+      });
+  }, [updated, refreshing, refreshfav]);
+
   return (
-   
+    <RefreshControl refreshing={refreshing} onRefresh={onRefresh}>
       <FlatList
         style={styles.list11}
         showsHorizontalScrollIndicator={false}
-        data={messages}
-        keyExtractor={(messages) => messages.id.toString()}
+        data={data}
+        keyExtractor={(data) => data.id.toString()}
         renderItem={({ item }) => (
           <ListFav
-            title={item.title}
-            subTitle={item.subTitle}
-            Price={item.Price}
-            image={item.image}
+            bookId={item.book_id}
+            deleteBook={onClickDelete}
+            idOfFav={item.id}
             navigation={navigation}
           />
         )}
       />
-   
+    </RefreshControl>
   );
 }
 const styles = StyleSheet.create({
   list11: {
-    marginBottom: 18
-  }
+    marginBottom: 18,
+  },
 });

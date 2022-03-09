@@ -41,6 +41,8 @@ function Login({ navigation }) {
         headers: { "Content-Type": "application/json" },
       })
         .then((res) => {
+          setEmail("");
+          setPassword("");
           dispatch(setUserData(res.data.user));
 
           navigation.navigate("Home1");

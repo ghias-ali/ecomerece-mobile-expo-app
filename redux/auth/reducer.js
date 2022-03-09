@@ -4,6 +4,7 @@ const initState = {
   isLoggedIn: false,
   user: null,
   refresh: false,
+  refreshfav: false,
 };
 
 export default function authReducer(state = initState, action) {
@@ -22,6 +23,11 @@ export default function authReducer(state = initState, action) {
       return {
         ...state,
         refresh: action.payload, // we set this as true on login
+      };
+    case t.SET_REFRESH_FAV:
+      return {
+        ...state,
+        refreshfav: action.payload, // we set this as true on login
       };
 
     default:
