@@ -1,13 +1,11 @@
 import React from "react";
-import { View, StyleSheet,  Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 
-export default function AboutUs({
-  
-}) {
+export default function AboutUs({}) {
   return (
-    <View style={styles.container}  >
+    <View style={styles.container}>
       <TouchableOpacity>
-      <Text style={styles.about}>AboutUs</Text>
+        <Text style={styles.about}>Coming soon!</Text>
       </TouchableOpacity>
     </View>
   );
@@ -16,9 +14,8 @@ const styles = StyleSheet.create({
   container: {
     padding: 5,
   },
-  about:{
-      color: "black",
-      textAlign: "center"
-  }
+  about: {
+    color: "black",
+    textAlign: "center",
+  },
 });
- 

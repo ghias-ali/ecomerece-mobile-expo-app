@@ -4,12 +4,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ProductsPage from "../screens/ProductsPage";
 import CartPage from "../screens/CartPage";
 
-function SettingsScreen({ navigation }) {
+function SettingsScreen() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-        <Text>Login</Text>
-      </TouchableOpacity>
+      <Text>Coming soon!</Text>
     </View>
   );
 }
@@ -27,29 +25,35 @@ function MyTabs() {
               source={require("../assets/images.png")}
               style={{ width: 35, height: 35 }}
             />
-          )
+          ),
         }}
         name="Products"
         component={ProductsPage}
       />
 
       <Tab.Screen
-        options={{ headerShown: false, tabBarIcon: () => (
-          <Image
-            source={require("../assets/cart.png")}
-            style={{ width: 32, height: 32, marginTop: 1 }}
-          />
-        ) }}
+        options={{
+          headerShown: false,
+          tabBarIcon: () => (
+            <Image
+              source={require("../assets/cart.png")}
+              style={{ width: 32, height: 32, marginTop: 1 }}
+            />
+          ),
+        }}
         name="Cart"
         component={CartPage}
       />
       <Tab.Screen
-        options={{ headerShown: false, tabBarIcon: () => (
-          <Image
-            source={require("../assets/ser.png")}
-            style={{ width: 35, height: 35 }}
-          />
-        ) }}
+        options={{
+          headerShown: false,
+          tabBarIcon: () => (
+            <Image
+              source={require("../assets/ser.png")}
+              style={{ width: 35, height: 35 }}
+            />
+          ),
+        }}
         name="Settings"
         component={SettingsScreen}
       />
