@@ -65,8 +65,16 @@ export default function ProductsPage({ navigation }) {
       headers: { "Content-Type": "application/json" },
     })
       .then((res) => {
-        console.log(res.data.length);
         setdata(res.data);
+        setboardname("");
+        setcategory_id("");
+        setclass_id("");
+        setbooks_id("");
+        setteacher_id("");
+        setcategory([]);
+        setClasses([]);
+        setbook([]);
+        setteachers([]);
       })
       .catch((e) => {
         console.log(e);
@@ -325,7 +333,6 @@ export default function ProductsPage({ navigation }) {
             <View>
               <DropDownPicker
                 items={board}
-                defaultIndex={0}
                 containerStyle={{ height: 40 }}
                 onChangeItem={(item) => onChangeBoard(item)}
               />
