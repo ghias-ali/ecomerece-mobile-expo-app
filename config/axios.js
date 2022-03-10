@@ -121,6 +121,53 @@ deleteFav.interceptors.request.use(
   }
 );
 
+const onchangeboard = axios.create({
+  baseURL: `${url}/getBoard/`,
+});
+onchangeboard.interceptors.request.use(
+  (req) => {
+    return req;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
+
+const onchangeClass = axios.create({
+  baseURL: `${url}/getTeacher/`,
+});
+onchangeClass.interceptors.request.use(
+  (req) => {
+    return req;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
+
+const getTeachername = axios.create({
+  baseURL: `${url}/getBook/`,
+});
+getTeachername.interceptors.request.use(
+  (req) => {
+    return req;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
+
+const generalsearch = axios.create({
+  baseURL: `${url}/search`,
+});
+generalsearch.interceptors.request.use(
+  (req) => {
+    return req;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
 export {
   login,
   bookscat,
@@ -132,4 +179,8 @@ export {
   addToFav,
   getFav,
   deleteFav,
+  onchangeboard,
+  onchangeClass,
+  getTeachername,
+  generalsearch,
 };
