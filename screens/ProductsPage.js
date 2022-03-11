@@ -216,15 +216,17 @@ export default function ProductsPage({ navigation }) {
       });
   }
   const search = (rows) => {
-    return rows.filter(
-      rows?.name?.toLowerCase().indexOf(searchQuery) > -1 ||
-        rows?.auther?.toLowerCase().indexOf(searchQuery) > -1 ||
-        rows?.teacher?.toLowerCase().indexOf(searchQuery) > -1 ||
-        rows?.class?.toLowerCase().indexOf(searchQuery) > -1 ||
-        rows?.board?.toLowerCase().indexOf(searchQuery) > -1 ||
-        rows?.category?.toLowerCase().indexOf(searchQuery) > -1 ||
-        rows.price?.indexOf(searchQuery) > -1
-    );
+    return rows.filter(function (rows) {
+      return (
+        rows?.name?.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1 ||
+        rows?.auther?.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1 ||
+        rows?.teacher?.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1 ||
+        rows?.class?.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1 ||
+        rows?.board?.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1 ||
+        rows?.category?.toLowerCase().indexOf(searchQuery.toLowerCase()) > -1 ||
+        rows.price?.indexOf(searchQuery.toLowerCase()) > -1
+      );
+    });
   };
   useEffect(() => {
     setloading(true);
@@ -245,11 +247,9 @@ export default function ProductsPage({ navigation }) {
   return (
     <View>
       <RefreshControl refreshing={refreshing} onRefresh={onRefresh}>
-        <View>
+        <View style={{ width: "100%", marginTop: 5, padding: 5 }}>
           <View
             style={{
-              marginTop: 5,
-              padding: 5,
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-between",
@@ -261,7 +261,7 @@ export default function ProductsPage({ navigation }) {
                 backgroundColor: "white",
                 padding: 4,
                 height: 45,
-                width: "85%",
+                width: 280,
                 borderRadius: 4,
               }}
               placeholder="Search"
@@ -296,7 +296,7 @@ export default function ProductsPage({ navigation }) {
           <View style={{ marginBottom: 120 }}>
             <FlatList
               showsHorizontalScrollIndicator={false}
-              data={data}
+              data={search(data)}
               keyExtractor={(data) => data.id.toString()}
               numColumns={2}
               renderItem={({ item }) => (
