@@ -1,167 +1,135 @@
-import React, { Component } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
-  StyleSheet,
-  View,
   FlatList,
-  ActivityIndicator,
-  ScrollView,
+  View,
   Text,
+  StyleSheet,
   TouchableOpacity,
-  Image,
+  RefreshControl,
 } from "react-native";
-import {
-  Table,
-  TableWrapper,
-  Cell,
-  Row,
-  Rows,
-  Col,
-  Cols,
-} from "react-native-table-component";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import Orderlistcart from "./Orderlistcart";
+import { cart } from "../config/axios";
+import { useSelector } from "react-redux";
+import { cartDelete } from "../config/axios";
 
-const Separator = (props) => <View style={{ height: "100%", width: 1 }} />;
+const wait = (timeout) => {
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
+export default function OrderList({ navigation }) {
+  const user = useSelector((state) => state.authReducer.user);
+  const refresh = useSelector((state) => state.authReducer.refresh);
+  const [refreshing, setRefreshing] = useState(false);
 
-    this.fields = [
-      { key: "code", title: "Item", width: 150 },
-      { key: "responsable", title: "Name", width: 100 },
-      { key: "piezas", title: "Price", width: 100 },
-      { key: "peso", title: "Remove", width: 100 },
-    ];
+  const [data, setdata] = useState([]);
+  const [totalprice, settotalprice] = useState(0);
+  const [updated, setupdated] = useState(false);
+  const [loading, setloading] = useState(false);
 
-    const dataFields = this.fields.slice(1);
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    wait(2000).then(() => setRefreshing(false));
+  }, []);
 
-    this.rows = Array.apply(null, Array(12)).map((item, idx) => ({
-      code: [
-        <Image
-          style={{ width: 20, height: 20 }}
-          source={require("../assets/book.png")}
-        />,
-      ],
-      responsable: `Name:Maths  `,
-      piezas: "1050Rs",
-      peso: [
-        <MaterialCommunityIcons
-          style={{
-            color: "rgb(255,79,129)",
-            fontSize: 20,
-          }}
-          name="delete"
-        />,
-      ],
-    }));
+  const onClickDelete = (id) => {
+    cartDelete(`${id}`, {})
+      .then(() => {
+        setupdated(!updated);
+      })
+      .catch(() => {
+        alert("delet cart error");
+      });
+  };
 
-    this.state = {
-      data: this.rows.map((row) => dataFields.map((field) => row[field.key])),
-      tableHead: dataFields.map((field) => field.title),
-      widthArr: dataFields.map((field) => field.width),
-    };
+  useEffect(() => {
+    setloading(true);
+    cart(`${user.id}`, {
+      method: "get",
+    })
+      .then((res) => {
+        setdata(res.data.list);
+        let arr = res.data.list;
+        let sum = 0;
+        for (let j = 0; j < arr.length; j++) {
+          sum = parseInt(arr[j].price) + sum;
+        }
 
-    this.onScroll = this.onScroll.bind(this);
-  }
+        settotalprice(sum);
+        setloading(false);
+      })
+      .catch(() => {
+        alert("Cart Not Found");
+        setloading(false);
+      });
+  }, [updated, refresh, refreshing]);
 
-  onScroll(e, target) {
-    target ? target.scrollTo({ y: e.nativeEvent.contentOffset.y }) : undefined;
-  }
-
-  render() {
-    const fields = this.state.data;
-    const state = this.state;
-
-    const marks = this.rows.map((row) => [row.code]);
-
-    const example3 = (
-      <View style={styles.container}>
-        <View style={{ flexDirection: "row" }}>
-          <View>
-            <Table borderStyle={{ borderColor: "#C1C0B9" }}>
-              <Cell
-                data={this.fields[0].title}
-                width={this.fields[0].width}
-                style={styles.header}
-                textStyle={styles.headerText}
-              />
-            </Table>
-            <View>
-              <ScrollView
-                style={styles.dataWrapper}
-                ref={(table) => (this._first = table)}
-                onScroll={(e) => this.onScroll(e, this._last)}
-              >
-                <Table borderStyle={{ borderColor: "#C1C0B9" }}>
-                  <Col
-                    data={marks}
-                    textStyle={styles.text}
-                    width={this.fields[0].width}
-                  />
-                </Table>
-              </ScrollView>
-            </View>
+  return (
+    <RefreshControl refreshing={refreshing} onRefresh={onRefresh}>
+      <View>
+        {loading ? (
+          <View
+            style={{
+              textAlign: "center",
+            }}
+          >
+            <Text>Loading...</Text>
           </View>
-
-          <ScrollView horizontal={true}>
-            <View>
-              <Table borderStyle={{ borderColor: "#C1C0B9" }}>
-                <Row
-                  data={state.tableHead}
-                  widthArr={state.widthArr}
-                  style={styles.header}
-                  textStyle={styles.headerText}
+        ) : (
+          <View>
+            <FlatList
+              style={styles.list}
+              showsHorizontalScrollIndicator={false}
+              data={data}
+              keyExtractor={(data) => data.id.toString()}
+              renderItem={({ item }) => (
+                <Orderlistcart
+                  bookId={item.book_id}
+                  navigation={navigation}
+                  deleteBook={onClickDelete}
+                  idOfCart={item.id}
                 />
-              </Table>
-              <View>
-                <ScrollView
-                  style={styles.dataWrapper}
-                  ref={(table) => (this._last = table)}
-                >
-                  <Table borderStyle={{ borderColor: "#C1C0B9" }}>
-                    <Rows
-                      data={this.state.data}
-                      textStyle={styles.text}
-                      widthArr={state.widthArr}
-                    />
-                  </Table>
-                </ScrollView>
-              </View>
-            </View>
-          </ScrollView>
-        </View>
+              )}
+            />
+          </View>
+        )}
       </View>
-    );
-
-    return example3;
-  }
+    </RefreshControl>
+  );
 }
-
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    paddingTop: 30,
-    backgroundColor: "#fff",
+    padding: 5,
+    position: "absolute",
+    alignSelf: "center",
+    bottom: 0,
   },
-  header: {
-    height: 50,
-    backgroundColor: "#fff",
+  costview: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    backgroundColor: "#FFFF",
+    padding: 25,
+    position: "absolute",
+    width: 350,
+    marginTop: -110,
+    alignSelf: "center",
   },
-  headerText: {
+  check: {
+    padding: 5,
+    backgroundColor: "rgb(248,26,26)",
+    borderRadius: 5,
+    marginTop: 5,
+    position: "absolute",
+    width: 350,
+    marginTop: -40,
+    alignSelf: "center",
+  },
+  checktext: {
+    fontSize: 20,
+    color: "white",
     textAlign: "center",
-    fontWeight: "100",
-    color: "black",
+    fontWeight: "bold",
   },
-  text: {
-    textAlign: "center",
-    fontWeight: "100",
-    color: "black",
-  },
-  dataWrapper: {
-    marginTop: -1,
-  },
-  row: {
-    height: 40,
-    backgroundColor: "#2c3445",
+  list: {
+    marginBottom: 112,
   },
 });
