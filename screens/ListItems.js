@@ -50,7 +50,12 @@ export default function ListItem({
           <Text style={styles.subTitle}>{subTitle}</Text>
           <View style={styles.btndiv}>
             <TouchableOpacity style={styles.btn}>
-              <Text style={styles.red}>Read</Text>
+              <Text
+                style={styles.red}
+                onPress={() => navigation.navigate("Subscription")}
+              >
+                Read
+              </Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.btn}

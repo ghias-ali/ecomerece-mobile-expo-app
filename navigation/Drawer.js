@@ -6,6 +6,7 @@ import Favourite from "../screens/Favourite";
 import AboutUs from "../screens/AboutUs";
 import ContactUs from "../screens/ContactUs";
 import OrderList from "../screens/OrderList";
+import Subscription from "../screens/Subscription";
 
 const Drawer = createDrawerNavigator();
 
@@ -17,6 +18,7 @@ function MyDrawer() {
       <Drawer.Screen name="About Us" component={AboutUs} />
       <Drawer.Screen name="Contact Us" component={ContactUs} />
       <Drawer.Screen name="My Order" component={OrderList} />
+      <Drawer.Screen name="Subscription" component={Subscription} />
     </Drawer.Navigator>
   );
 }

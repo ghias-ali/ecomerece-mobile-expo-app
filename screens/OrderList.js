@@ -52,7 +52,6 @@ export default function OrderList() {
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
-            style={styles.list}
             showsHorizontalScrollIndicator={false}
             data={data}
             keyExtractor={(data) => data.id.toString()}
@@ -101,8 +100,5 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
     fontWeight: "bold",
-  },
-  list: {
-    // marginBottom: 112,
   },
 });
