@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Image, Text } from "react-native";
 import { bookDetail } from "../config/axios";
 
-export default function OrdeListCart({ bookId }) {
+export default function OrdeListCart({ bookId, status, price }) {
   const [data, setdata] = useState({});
 
   useEffect(() => {
@@ -13,7 +13,7 @@ export default function OrdeListCart({ bookId }) {
         setdata(res.data.book);
       })
       .catch(() => {
-        alert("Email or Password is incorrect!");
+        alert("Book cannot Fetch");
       });
   }, []);
   return (
@@ -31,30 +31,8 @@ export default function OrdeListCart({ bookId }) {
           <Text style={styles.title}>{data?.name}</Text>
           <Text style={styles.subTitle}>{data?.auther}</Text>
 
-          {/* <View style={styles.pusview}>
-            <TouchableOpacity>
-              <Entypo
-                style={{
-                  color: "rgb(255,79,129)",
-                  fontSize: 25,
-                  marginLeft: 8,
-                }}
-                name="circle-with-minus"
-              />
-            </TouchableOpacity>
-            <Text style={styles.no}>1</Text>
-            <TouchableOpacity>
-              <Entypo
-                style={{
-                  color: "rgb(255,79,129)",
-                  fontSize: 25,
-                  marginLeft: 8,
-                }}
-                name="circle-with-plus"
-              />
-            </TouchableOpacity>
-          </View> */}
-          <Text style={styles.subTitle}>Status</Text>
+          <Text style={styles.subTitle2}>{status}</Text>
+          <Text style={styles.price}>{price} Rs</Text>
         </View>
       </View>
     </View>
@@ -92,6 +70,12 @@ const styles = StyleSheet.create({
     color: "#515450",
     marginLeft: 8,
   },
+  subTitle2: {
+    fontSize: 12,
+    lineHeight: 23,
+    color: "#515450",
+    marginLeft: 8,
+  },
   Price: {
     fontSize: 10,
     lineHeight: 23,
@@ -113,5 +97,9 @@ const styles = StyleSheet.create({
     backgroundColor: "rgb(248,26,26)",
     borderRadius: 5,
     marginTop: 15,
+  },
+  price: {
+    color: "green",
+    fontSize: 20,
   },
 });

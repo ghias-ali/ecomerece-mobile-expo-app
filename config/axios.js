@@ -180,6 +180,18 @@ checkout.interceptors.request.use(
     return Promise.reject(err);
   }
 );
+
+const ordersList = axios.create({
+  baseURL: `${url}/user/order/list`,
+});
+ordersList.interceptors.request.use(
+  (req) => {
+    return req;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
 export {
   login,
   bookscat,
@@ -196,4 +208,5 @@ export {
   getTeachername,
   generalsearch,
   checkout,
+  ordersList,
 };

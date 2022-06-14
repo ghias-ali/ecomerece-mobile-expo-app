@@ -1,29 +1,19 @@
 import React, { useState, useEffect, useCallback } from "react";
-import {
-  FlatList,
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  RefreshControl,
-} from "react-native";
+import { FlatList, View, Text, StyleSheet, RefreshControl } from "react-native";
 import Orderlistcart from "./Orderlistcart";
-import { cart } from "../config/axios";
+import { ordersList } from "../config/axios";
 import { useSelector } from "react-redux";
-import { cartDelete } from "../config/axios";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
 };
 
-export default function OrderList({ navigation }) {
+export default function OrderList() {
   const user = useSelector((state) => state.authReducer.user);
   const refresh = useSelector((state) => state.authReducer.refresh);
   const [refreshing, setRefreshing] = useState(false);
 
   const [data, setdata] = useState([]);
-  const [totalprice, settotalprice] = useState(0);
-  const [updated, setupdated] = useState(false);
   const [loading, setloading] = useState(false);
 
   const onRefresh = useCallback(() => {
@@ -31,69 +21,52 @@ export default function OrderList({ navigation }) {
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
-  const onClickDelete = (id) => {
-    cartDelete(`${id}`, {})
-      .then(() => {
-        setupdated(!updated);
-      })
-      .catch(() => {
-        alert("delet cart error");
-      });
-  };
-
   useEffect(() => {
     setloading(true);
-    cart(`${user.id}`, {
+    ordersList(`/${user.id}`, {
       method: "get",
     })
       .then((res) => {
-        setdata(res.data.list);
-        let arr = res.data.list;
-        let sum = 0;
-        for (let j = 0; j < arr.length; j++) {
-          sum = parseInt(arr[j].price) + sum;
-        }
-
-        settotalprice(sum);
+        setdata(res.data);
         setloading(false);
       })
       .catch(() => {
-        alert("Cart Not Found");
+        alert("Orders Not Found");
         setloading(false);
       });
-  }, [updated, refresh, refreshing]);
+  }, [refresh, refreshing]);
 
   return (
-    <RefreshControl refreshing={refreshing} onRefresh={onRefresh}>
-      <View>
-        {loading ? (
-          <View
-            style={{
-              textAlign: "center",
-            }}
-          >
-            <Text>Loading...</Text>
-          </View>
-        ) : (
-          <View>
-            <FlatList
-              style={styles.list}
-              showsHorizontalScrollIndicator={false}
-              data={data}
-              keyExtractor={(data) => data.id.toString()}
-              renderItem={({ item }) => (
-                <Orderlistcart
-                  bookId={item.book_id}
-                  navigation={navigation}
-                  deleteBook={onClickDelete}
-                  idOfCart={item.id}
-                />
-              )}
-            />
-          </View>
-        )}
-      </View>
-    </RefreshControl>
+    <View>
+      {loading ? (
+        <View
+          style={{
+            textAlign: "center",
+          }}
+        >
+          <Text>Loading...</Text>
+        </View>
+      ) : (
+        <View>
+          <FlatList
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            style={styles.list}
+            showsHorizontalScrollIndicator={false}
+            data={data}
+            keyExtractor={(data) => data.id.toString()}
+            renderItem={({ item }) => (
+              <Orderlistcart
+                bookId={item?.book_id}
+                status={item?.status}
+                price={item?.price}
+              />
+            )}
+          />
+        </View>
+      )}
+    </View>
   );
 }
 const styles = StyleSheet.create({
@@ -130,6 +103,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   list: {
-    marginBottom: 112,
+    // marginBottom: 112,
   },
 });
