@@ -13,7 +13,6 @@ function MyDrawer() {
   return (
     <Drawer.Navigator>
       <Drawer.Screen name="Home" component={MyTabs} />
-      {/* <Drawer.Screen name="Books" component={BookPage} /> */}
       <Drawer.Screen name="Favourite" component={Favourite} />
       <Drawer.Screen name="About Us" component={AboutUs} />
       <Drawer.Screen name="Contact Us" component={ContactUs} />
