@@ -30,7 +30,6 @@ export default function ListItem({
       method: "post",
     })
       .then((res) => {
-        console.log("added");
         dispatch(setRefreshdata(!refresh));
       })
       .catch(() => {

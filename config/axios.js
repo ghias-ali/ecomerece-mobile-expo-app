@@ -168,6 +168,18 @@ generalsearch.interceptors.request.use(
     return Promise.reject(err);
   }
 );
+
+const checkout = axios.create({
+  baseURL: `${url}/checkout `,
+});
+checkout.interceptors.request.use(
+  (req) => {
+    return req;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
 export {
   login,
   bookscat,
@@ -183,4 +195,5 @@ export {
   onchangeClass,
   getTeachername,
   generalsearch,
+  checkout,
 };

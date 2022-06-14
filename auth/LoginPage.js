@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { login } from "../config/axios";
-import { setUserData } from "../redux/actions";
+import { setUserData, setLoginState } from "../redux/actions";
 
 function Login({ navigation }) {
   const dispatch = useDispatch();
@@ -44,8 +44,7 @@ function Login({ navigation }) {
           setEmail("");
           setPassword("");
           dispatch(setUserData(res.data.user));
-
-          navigation.navigate("Home1");
+          dispatch(setLoginState(true));
         })
         .catch(() => {
           alert("Email or Password is incorrect!");
