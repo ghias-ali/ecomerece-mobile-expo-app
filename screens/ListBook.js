@@ -1,15 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
-import AntDesign from "react-native-vector-icons/AntDesign";
 
-export default function ListBook({
-  title,
-  subTitle,
-  image,
-  onPress,
-  Price,
-  navigation
-}) {
+export default function ListBook({ title, subTitle, image, onPress, Price }) {
   return (
     <View style={styles.container} onPress={onPress}>
       <View style={styles.image44455}>
@@ -34,7 +26,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 5,
     marginTop: -2,
-    marginBottom: -6
+    marginBottom: -6,
   },
   image44455: {
     flexDirection: "row",
@@ -42,11 +34,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    width: "auto"
+    width: "auto",
   },
   image133: {
     width: 135,
-    height: 150
+    height: 150,
   },
   title: {
     fontSize: 12,
@@ -54,22 +46,22 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "black",
     marginLeft: 8,
-    marginTop: 10
+    marginTop: 10,
   },
   subTitle: {
     fontSize: 10,
     lineHeight: 23,
     color: "#515450",
-    marginLeft: 8
+    marginLeft: 8,
   },
   btn12: {
-    padding:1.5,
+    padding: 1.5,
     backgroundColor: "rgb(248,26,26)",
     borderRadius: 10,
     marginLeft: 8,
   },
-  see:{
-      color: "white",
-      textAlign: "center"
-  }
+  see: {
+    color: "white",
+    textAlign: "center",
+  },
 });

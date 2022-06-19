@@ -10,14 +10,44 @@ import {
   TextInput,
 } from "react-native";
 import { Modal, Portal, Provider } from "react-native-paper";
+import { useSelector } from "react-redux";
+import { subscription } from "../config/axios";
 
 export default function Subscription() {
   const [visible, setVisible] = useState(false);
-  const showModal = () => {
-    setVisible(true);
+  const [price, setprice] = useState("");
+  const user = useSelector((state) => state.authReducer.user);
+
+  const showModal = (l) => {
+    if (l !== "Free Pass") {
+      setprice(l);
+      setVisible(true);
+    }
   };
   const hideModal = () => setVisible(false);
   const containerStyle = { backgroundColor: "white", padding: 20 };
+
+  const proceedSubscription = () => {
+    let data = {
+      plan: "Month",
+      name: user?.name,
+      email: user?.email,
+      refference: "112211",
+    };
+    subscription({
+      method: "POST",
+
+      data: data,
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => {
+        console.log(res.status);
+      })
+      .catch((err) => {
+        alert("Please try again later");
+        console.log(err);
+      });
+  };
 
   const mydata = [
     {
@@ -55,7 +85,10 @@ export default function Subscription() {
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.subTitle}>{item.description}</Text>
         <Text style={styles.read}>{item.read}</Text>
-        <TouchableOpacity style={styles.btn} onPress={showModal}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => showModal(item?.description)}
+        >
           <Text style={{ color: "white" }}>Buy plan</Text>
         </TouchableOpacity>
       </View>
@@ -68,7 +101,6 @@ export default function Subscription() {
         <Text style={styles.get}>GET PLAN</Text>
         <Text style={styles.plan}>Choose a Plan</Text>
         <FlatList
-          showsHorizontalScrollIndicator={true}
           data={mydata}
           renderItem={({ item }) => {
             return renderData(item);
@@ -109,7 +141,7 @@ export default function Subscription() {
                 marginBottom: 5,
               }}
             >
-              So please Pay 20 $ from jazzcash first.
+              So please Pay {price} from jazzcash first.
             </Text>
             <Text
               style={{
@@ -151,8 +183,9 @@ export default function Subscription() {
                   borderColor: "#777777",
                   marginTop: 5,
                 }}
-                value=""
-                placeholder=""
+                value={user?.name}
+                editable={false}
+                selectTextOnFocus={false}
               />
             </View>
             <View style={{ marginTop: 10 }}>
@@ -167,8 +200,9 @@ export default function Subscription() {
                   borderColor: "#777777",
                   marginTop: 5,
                 }}
-                value=""
-                placeholder=""
+                value={user?.email}
+                editable={false}
+                selectTextOnFocus={false}
               />
             </View>
             <View style={{ marginTop: 10 }}>
@@ -201,8 +235,9 @@ export default function Subscription() {
                   padding: 10,
                   borderRadius: 10,
                 }}
+                onPress={proceedSubscription}
               >
-                <Text style={{ color: "white" }}>Proceed Order</Text>
+                <Text style={{ color: "white" }}>Proceed Subscription</Text>
               </TouchableOpacity>
             </View>
           </Modal>

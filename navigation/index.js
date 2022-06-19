@@ -4,6 +4,7 @@ import LoginScreen from "../auth/LoginPage";
 import Signup from "../auth/SignupPage";
 import MyDrawer from "./Drawer";
 import ProductDetails from "../screens/ProductDetails";
+import BookRead from "../screens/BookRead";
 import { useSelector } from "react-redux";
 
 const Stack = createNativeStackNavigator();
@@ -20,6 +21,7 @@ const MyStack = () => {
           component={MyDrawer}
         />
         <Stack.Screen name="ProductDetails" component={ProductDetails} />
+        <Stack.Screen name="Read" component={BookRead} />
       </Stack.Navigator>
     );
   } else {

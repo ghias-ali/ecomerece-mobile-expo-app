@@ -192,6 +192,18 @@ ordersList.interceptors.request.use(
     return Promise.reject(err);
   }
 );
+
+const subscription = axios.create({
+  baseURL: `${url}/buy/subscription`,
+});
+subscription.interceptors.request.use(
+  (req) => {
+    return req;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
 export {
   login,
   bookscat,
@@ -209,4 +221,5 @@ export {
   generalsearch,
   checkout,
   ordersList,
+  subscription,
 };

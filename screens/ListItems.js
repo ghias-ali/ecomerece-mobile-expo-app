@@ -52,7 +52,7 @@ export default function ListItem({
             <TouchableOpacity style={styles.btn}>
               <Text
                 style={styles.red}
-                onPress={() => navigation.navigate("Subscription")}
+                onPress={() => navigation.navigate("Read")}
               >
                 Read
               </Text>
