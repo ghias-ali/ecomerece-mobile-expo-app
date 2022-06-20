@@ -25,6 +25,14 @@ export default function ListItem({
   const user = useSelector((state) => state.authReducer.user);
   const refresh = useSelector((state) => state.authReducer.refresh);
 
+  const checkNavigate = () => {
+    if (user?.is_subscribe === "1") {
+      navigation.navigate("Read");
+    } else {
+      navigation.navigate("Subscription");
+    }
+  };
+
   const addtocart = () => {
     addToCart(`${id}/${user.id}`, {
       method: "post",
@@ -50,10 +58,7 @@ export default function ListItem({
           <Text style={styles.subTitle}>{subTitle}</Text>
           <View style={styles.btndiv}>
             <TouchableOpacity style={styles.btn}>
-              <Text
-                style={styles.red}
-                onPress={() => navigation.navigate("Read")}
-              >
+              <Text style={styles.red} onPress={checkNavigate}>
                 Read
               </Text>
             </TouchableOpacity>

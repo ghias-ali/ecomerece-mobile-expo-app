@@ -10,7 +10,8 @@ import {
 
 import { register } from "../config/axios";
 import { useDispatch } from "react-redux";
-import { setUserData } from "../redux/actions";
+import { setUserData, setLoginState } from "../redux/actions";
+
 function SignUp({ navigation }) {
   const dispatch = useDispatch();
 
@@ -59,8 +60,7 @@ function SignUp({ navigation }) {
       })
         .then((res) => {
           dispatch(setUserData(res.data.user));
-
-          navigation.navigate("Home1");
+          dispatch(setLoginState(true));
         })
         .catch(() => {
           alert("Error Occured! Try again later");
