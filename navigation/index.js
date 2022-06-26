@@ -20,8 +20,8 @@ const MyStack = () => {
           name="Home1"
           component={MyDrawer}
         />
-        <Stack.Screen name="ProductDetails" component={ProductDetails} />
         <Stack.Screen name="Read" component={BookRead} />
+        <Stack.Screen name="ProductDetails" component={ProductDetails} />
       </Stack.Navigator>
     );
   } else {

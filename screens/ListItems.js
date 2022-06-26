@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   SafeAreaView,
   View,
@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { addToCart } from "../config/axios";
+import { addToCart, bookDetail } from "../config/axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setRefreshdata } from "../redux/actions";
 
@@ -24,10 +24,25 @@ export default function ListItem({
 
   const user = useSelector((state) => state.authReducer.user);
   const refresh = useSelector((state) => state.authReducer.refresh);
+  const [loading, setloading] = useState(false);
 
   const checkNavigate = () => {
+    setloading(true);
+
     if (user?.is_subscribe === "1") {
-      navigation.navigate("Read");
+      bookDetail(`${id}`, {
+        method: "get",
+      })
+        .then((res) => {
+          navigation.navigate("Read", {
+            link: `https://kitabank.studentsresource.net/${res.data.book?.file}`,
+          });
+          setloading(false);
+        })
+        .catch(() => {
+          alert("book detail error");
+          setloading(false);
+        });
     } else {
       navigation.navigate("Subscription");
     }
@@ -59,7 +74,7 @@ export default function ListItem({
           <View style={styles.btndiv}>
             <TouchableOpacity style={styles.btn}>
               <Text style={styles.red} onPress={checkNavigate}>
-                Read
+                {loading ? "Loading" : "Read"}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ecomerce-mobile-app",
-    "slug": "ecomerce-mobile-app",
+    "name": "kitabank",
+    "slug": "kitabank",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,9 +13,7 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "e-comerce-version-ghias"
