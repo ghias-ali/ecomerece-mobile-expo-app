@@ -6,6 +6,7 @@ import {
   TextInput,
   TouchableOpacity,
   Image,
+  ScrollView
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { login } from "../config/axios";
@@ -54,52 +55,54 @@ function Login({ navigation }) {
     }
   };
   return (
-    <View style={styles.container}>
-      <Image
-        style={styles.logo}
-        source={{
-          uri: "http://www.kitabank.com/uploads/cms/logo.png",
-        }}
-      />
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.inputText}
-          placeholder="Email"
-          placeholderTextColor="#003f5c"
-          value={email}
-          onChangeText={(text) => {
-            setEmail(text);
-            setEmailError("");
+    <ScrollView>
+      <View style={styles.container}>
+        <Image
+          style={styles.logo}
+          source={{
+            uri: "http://www.kitabank.com/uploads/cms/logo.png",
           }}
         />
-      </View>
-      {!!emailError && <Text style={styles.errorIndicator}>{emailError}</Text>}
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.inputText}
-          placeholder="Password"
-          placeholderTextColor="#003f5c"
-          secureTextEntry
-          value={password}
-          onChangeText={(text) => {
-            setPassword(text);
-            setPasswordError("");
-          }}
-        />
-      </View>
-      {!!passwordError && (
-        <Text style={styles.errorIndicator}>{passwordError}</Text>
-      )}
-      <TouchableOpacity style={styles.loginBtn} onPress={() => onSubmit()}>
-        <Text style={styles.loginText}>LOGIN</Text>
-      </TouchableOpacity>
-      <View style={styles.displayflex}>
-        <Text>Don't Have Account ? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("Sign Up")}>
-          <Text style={styles.siggnuptext}>Register</Text>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.inputText}
+            placeholder="Email"
+            placeholderTextColor="#003f5c"
+            value={email}
+            onChangeText={(text) => {
+              setEmail(text);
+              setEmailError("");
+            }}
+          />
+        </View>
+        {!!emailError && <Text style={styles.errorIndicator}>{emailError}</Text>}
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.inputText}
+            placeholder="Password"
+            placeholderTextColor="#003f5c"
+            secureTextEntry
+            value={password}
+            onChangeText={(text) => {
+              setPassword(text);
+              setPasswordError("");
+            }}
+          />
+        </View>
+        {!!passwordError && (
+          <Text style={styles.errorIndicator}>{passwordError}</Text>
+        )}
+        <TouchableOpacity style={styles.loginBtn} onPress={() => onSubmit()}>
+          <Text style={styles.loginText}>LOGIN</Text>
         </TouchableOpacity>
+        <View style={styles.displayflex}>
+          <Text>Don't Have Account ? </Text>
+          <TouchableOpacity onPress={() => navigation.navigate("Sign Up")}>
+            <Text style={styles.siggnuptext}>Register</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 export default Login;
@@ -108,6 +111,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingTop: 100,
+    paddingBottom: 200,  // so on input is focused we can see the input view
   },
   logo: {
     height: 200,

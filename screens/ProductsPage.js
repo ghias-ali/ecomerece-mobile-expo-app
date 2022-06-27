@@ -18,6 +18,7 @@ import {
 import { Modal, Portal, Provider } from "react-native-paper";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import DropDownPicker from "react-native-dropdown-picker";
+import { ScrollView } from "react-native-gesture-handler";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -246,47 +247,51 @@ export default function ProductsPage({ navigation }) {
 
   return (
     <View>
-      <RefreshControl refreshing={refreshing} onRefresh={onRefresh}>
-        <View style={{ width: "100%", marginTop: 5, padding: 5 }}>
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <TextInput
-              style={{
-                backgroundColor: "white",
-                padding: 4,
-                height: 45,
-                width: 280,
-                borderRadius: 4,
-              }}
-              placeholder="Search"
-              placeholderTextColor="#003f5c"
-              value={searchQuery}
-              onChangeText={(text) => {
-                setSearchQuery(text);
-              }}
-            />
-            <TouchableOpacity
-              style={{ backgroundColor: "white", padding: 13, borderRadius: 2 }}
-              onPress={showModal}
-            >
-              <AntDesign
+      <ScrollView
+        style={{ marginBottom: 30 }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh}>
+            <View style={{ width: "100%", marginTop: 5, padding: 5 }}>
+              <View
                 style={{
-                  color: "rgb(255,79,129)",
-                  fontSize: 20,
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
                 }}
-                name="filter"
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </RefreshControl>
+              >
+                <TextInput
+                  style={{
+                    backgroundColor: "white",
+                    padding: 4,
+                    height: 45,
+                    width: 280,
+                    borderRadius: 4,
+                  }}
+                  placeholder="Search"
+                  placeholderTextColor="#003f5c"
+                  value={searchQuery}
+                  onChangeText={(text) => {
+                    setSearchQuery(text);
+                  }}
+                />
+                <TouchableOpacity
+                  style={{ backgroundColor: "white", padding: 13, borderRadius: 2 }}
+                  onPress={showModal}
+                >
+                  <AntDesign
+                    style={{
+                      color: "rgb(255,79,129)",
+                      fontSize: 20,
+                    }}
+                    name="filter"
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </RefreshControl>
 
+        } />
       <View>
         {loading ? (
           <View style={{ alignSelf: "center" }}>

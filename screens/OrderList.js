@@ -3,6 +3,7 @@ import { FlatList, View, Text, StyleSheet, RefreshControl } from "react-native";
 import Orderlistcart from "./Orderlistcart";
 import { ordersList } from "../config/axios";
 import { useSelector } from "react-redux";
+import { ScrollView } from "react-native-gesture-handler";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -48,7 +49,7 @@ export default function OrderList() {
         </View>
       ) : (
         <View>
-          <FlatList
+          <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }

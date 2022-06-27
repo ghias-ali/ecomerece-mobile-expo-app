@@ -3,6 +3,7 @@ import { FlatList, StyleSheet, RefreshControl } from "react-native";
 import ListFav from "./ListFav";
 import { getFav, deleteFav } from "../config/axios";
 import { useSelector } from "react-redux";
+import { ScrollView } from "react-native-gesture-handler";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -43,22 +44,26 @@ export default function Favourite({ navigation }) {
   }, [updated, refreshing, refreshfav]);
 
   return (
-    <RefreshControl refreshing={refreshing} onRefresh={onRefresh}>
-      <FlatList
-        style={styles.list11}
-        showsHorizontalScrollIndicator={false}
-        data={data}
-        keyExtractor={(data) => data.id.toString()}
-        renderItem={({ item }) => (
-          <ListFav
-            bookId={item.book_id}
-            deleteBook={onClickDelete}
-            idOfFav={item.id}
-            navigation={navigation}
+    <ScrollView
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh}>
+          <FlatList
+            style={styles.list11}
+            showsHorizontalScrollIndicator={false}
+            data={data}
+            keyExtractor={(data) => data.id.toString()}
+            renderItem={({ item }) => (
+              <ListFav
+                bookId={item.book_id}
+                deleteBook={onClickDelete}
+                idOfFav={item.id}
+                navigation={navigation}
+              />
+            )}
           />
-        )}
-      />
-    </RefreshControl>
+        </RefreshControl>
+      }
+    />
   );
 }
 const styles = StyleSheet.create({

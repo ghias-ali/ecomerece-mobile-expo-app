@@ -13,6 +13,7 @@ import { cart } from "../config/axios";
 import { useSelector } from "react-redux";
 import { cartDelete, checkout } from "../config/axios";
 import { Modal, Portal, Provider } from "react-native-paper";
+import { ScrollView } from "react-native-gesture-handler";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -85,25 +86,27 @@ export default function CartPage({ navigation }) {
 
   useEffect(() => {
     setloading(true);
-    cart(`${user.id}`, {
-      method: "get",
-    })
-      .then((res) => {
-        setdata(res.data.list);
-
-        let arr = res.data.list;
-        let sum = 0;
-        for (let j = 0; j < arr.length; j++) {
-          sum = parseInt(arr[j].price) + sum;
-        }
-
-        settotalprice(sum);
-        setloading(false);
+    if (user) {
+      cart(`${user.id}`, {
+        method: "get",
       })
-      .catch(() => {
-        alert("Cart Not Found");
-        setloading(false);
-      });
+        .then((res) => {
+          setdata(res.data.list);
+
+          let arr = res.data.list;
+          let sum = 0;
+          for (let j = 0; j < arr.length; j++) {
+            sum = parseInt(arr[j].price) + sum;
+          }
+
+          settotalprice(sum);
+          setloading(false);
+        })
+        .catch(() => {
+          alert("Cart Not Found");
+          setloading(false);
+        });
+    }
   }, [updated, refresh, refreshing]);
 
   return (
@@ -118,7 +121,7 @@ export default function CartPage({ navigation }) {
         </View>
       ) : (
         <View style={{ height: "100%" }}>
-          <FlatList
+          <ScrollView
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }

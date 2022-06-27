@@ -11,6 +11,7 @@ import {
 import { register } from "../config/axios";
 import { useDispatch } from "react-redux";
 import { setUserData, setLoginState } from "../redux/actions";
+import { ScrollView } from "react-native-gesture-handler";
 
 function SignUp({ navigation }) {
   const dispatch = useDispatch();
@@ -70,80 +71,82 @@ function SignUp({ navigation }) {
     }
   };
   return (
-    <View style={styles.container}>
-      <Image
-        style={styles.logo}
-        source={{
-          uri: "http://www.kitabank.com/uploads/cms/logo.png",
-        }}
-      />
+    <ScrollView>
+      <View style={styles.container}>
+        <Image
+          style={styles.logo}
+          source={{
+            uri: "http://www.kitabank.com/uploads/cms/logo.png",
+          }}
+        />
 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.inputText}
-          placeholder="Name"
-          placeholderTextColor="#003f5c"
-          value={name}
-          onChangeText={(text) => {
-            setName(text);
-            setNameError("");
-          }}
-        />
-      </View>
-      {!!nameError && <Text style={styles.errorIndicator}>{nameError}</Text>}
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.inputText}
+            placeholder="Name"
+            placeholderTextColor="#003f5c"
+            value={name}
+            onChangeText={(text) => {
+              setName(text);
+              setNameError("");
+            }}
+          />
+        </View>
+        {!!nameError && <Text style={styles.errorIndicator}>{nameError}</Text>}
 
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.inputText}
-          placeholder="Phone"
-          placeholderTextColor="#003f5c"
-          value={phone}
-          onChangeText={(text) => {
-            setPhone(text);
-            setPhoneError("");
-          }}
-        />
-      </View>
-      {!!phoneError && <Text style={styles.errorIndicator}>{phoneError}</Text>}
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.inputText}
-          placeholder="Email"
-          placeholderTextColor="#003f5c"
-          value={email}
-          onChangeText={(text) => {
-            setEmail(text);
-            setEmailError("");
-          }}
-        />
-      </View>
-      {!!emailError && <Text style={styles.errorIndicator}>{emailError}</Text>}
-      <View style={styles.inputView}>
-        <TextInput
-          style={styles.inputText}
-          placeholder="Password"
-          placeholderTextColor="#003f5c"
-          secureTextEntry
-          value={password}
-          onChangeText={(text) => {
-            setPassword(text);
-            setPasswordError("");
-          }}
-        />
-      </View>
-      {!!passwordError && (
-        <Text style={styles.errorIndicator}>{passwordError}</Text>
-      )}
-      <TouchableOpacity style={styles.loginBtn} onPress={() => onSubmit()}>
-        <Text style={styles.loginText}>Register</Text>
-      </TouchableOpacity>
-      <View style={styles.displayflex}>
-        <Text>Already Have Account ? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-          <Text style={styles.siggnuptext}>Login</Text>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.inputText}
+            placeholder="Phone"
+            placeholderTextColor="#003f5c"
+            value={phone}
+            onChangeText={(text) => {
+              setPhone(text);
+              setPhoneError("");
+            }}
+          />
+        </View>
+        {!!phoneError && <Text style={styles.errorIndicator}>{phoneError}</Text>}
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.inputText}
+            placeholder="Email"
+            placeholderTextColor="#003f5c"
+            value={email}
+            onChangeText={(text) => {
+              setEmail(text);
+              setEmailError("");
+            }}
+          />
+        </View>
+        {!!emailError && <Text style={styles.errorIndicator}>{emailError}</Text>}
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.inputText}
+            placeholder="Password"
+            placeholderTextColor="#003f5c"
+            secureTextEntry
+            value={password}
+            onChangeText={(text) => {
+              setPassword(text);
+              setPasswordError("");
+            }}
+          />
+        </View>
+        {!!passwordError && (
+          <Text style={styles.errorIndicator}>{passwordError}</Text>
+        )}
+        <TouchableOpacity style={styles.loginBtn} onPress={() => onSubmit()}>
+          <Text style={styles.loginText}>Register</Text>
         </TouchableOpacity>
+        <View style={styles.displayflex}>
+          <Text>Already Have Account ? </Text>
+          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+            <Text style={styles.siggnuptext}>Login</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -154,6 +157,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingTop: 10,
+    paddingBottom: 300,
   },
   logo: {
     height: 200,
