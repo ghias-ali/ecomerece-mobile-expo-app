@@ -2,7 +2,7 @@
   "expo": {
     "name": "kitabank",
     "slug": "kitabank",
-    "version": "1.0.0",
+    "version": "2.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -19,6 +19,7 @@
       "bundleIdentifier": "e-comerce-version-ghias"
     },
     "android": {
+      "versionCode": 2,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

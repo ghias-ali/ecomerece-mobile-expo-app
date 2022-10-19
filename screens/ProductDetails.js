@@ -10,6 +10,7 @@ import {
 import { bookDetail, addToFav } from "../config/axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setRefreshFav } from "../redux/actions";
+import htmlToFormattedText from "html-to-formatted-text";
 
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -133,7 +134,9 @@ export default function ProductDetails({ route, navigation }) {
         </View>
         <View style={styles.bookkview}>
           <Text style={styles.teachertext}>Book Description</Text>
-          <Text style={styles.teachertext1}>{data.description}</Text>
+          <Text style={styles.teachertext1}>
+            {htmlToFormattedText(data.description)}
+          </Text>
         </View>
       </View>
     </ScrollView>

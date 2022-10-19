@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "Cambridge",
+    "category": ["Yearly", "Topical", "Notes"],
+    "class": ["A Level", "O Level", "IGCSE"]
+  },
+  {
+    "id": 2,
+    "title": "Edexcel",
+    "category": ["Yearly", "Topical"],
+    "class": ["A Level", "IGCSE", "GCSE"]
+  },
+  {
+    "id": 3,
+    "title": "IB",
+    "category": ["Yearly"],
+    "class": ["SL", "HL"]
+  },
+  {
+    "id": 1,
+    "title": "AQA",
+    "category": ["Yearly"],
+    "class": ["A Level", "GCSE"]
+  }
+]

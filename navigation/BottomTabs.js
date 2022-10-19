@@ -3,14 +3,7 @@ import { Text, View, TouchableOpacity, Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ProductsPage from "../screens/ProductsPage";
 import CartPage from "../screens/CartPage";
-
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Coming soon!</Text>
-    </View>
-  );
-}
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 const Tab = createBottomTabNavigator();
 
@@ -20,11 +13,8 @@ function MyTabs() {
       <Tab.Screen
         options={{
           headerShown: false,
-          tabBarIcon: () => (
-            <Image
-              source={require("../assets/images.png")}
-              style={{ width: 35, height: 35 }}
-            />
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="home" color={color} size={size} />
           ),
         }}
         name="Products"
@@ -34,28 +24,12 @@ function MyTabs() {
       <Tab.Screen
         options={{
           headerShown: false,
-          tabBarIcon: () => (
-            <Image
-              source={require("../assets/cart.png")}
-              style={{ width: 32, height: 32, marginTop: 1 }}
-            />
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="cart" color={color} size={size} />
           ),
         }}
         name="Cart"
         component={CartPage}
-      />
-      <Tab.Screen
-        options={{
-          headerShown: false,
-          tabBarIcon: () => (
-            <Image
-              source={require("../assets/ser.png")}
-              style={{ width: 35, height: 35 }}
-            />
-          ),
-        }}
-        name="Settings"
-        component={SettingsScreen}
       />
     </Tab.Navigator>
   );
