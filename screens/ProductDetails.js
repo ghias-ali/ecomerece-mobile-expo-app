@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
   View,
   StyleSheet,
-  Image,
   Text,
   TouchableOpacity,
   ScrollView,
@@ -14,6 +13,7 @@ import htmlToFormattedText from "html-to-formatted-text";
 
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import CacheImage from "./caheimage";
 
 export default function ProductDetails({ route, navigation }) {
   const dispatch = useDispatch();
@@ -24,6 +24,7 @@ export default function ProductDetails({ route, navigation }) {
   const { id } = route.params;
 
   const [data, setdata] = useState({});
+  const [loading, setloading] = useState(false);
 
   const onAddtoFav = () => {
     addToFav(`${id}/${user.id}`, {
@@ -40,28 +41,32 @@ export default function ProductDetails({ route, navigation }) {
   };
 
   useEffect(() => {
+    setloading(true);
     bookDetail(`${id}`, {
       method: "get",
     })
       .then((res) => {
         setdata(res.data.book);
+        setloading(false);
       })
       .catch(() => {
         alert("book detail error");
+        setloading(false);
       });
   }, []);
 
   return (
     <ScrollView style={styles.scrollView}>
       <View style={styles.container22}>
-        <View>
-          <Image
-            style={styles.eng}
-            source={{
-              uri: `https://kitabank.studentsresource.net/${data.image}`,
-            }}
-          ></Image>
-        </View>
+        {!loading && (
+          <View>
+            <CacheImage
+              style={styles.eng}
+              uri={`https://kitabank.studentsresource.net/${data.image}`}
+            />
+          </View>
+        )}
+
         <View style={styles.teacherview}>
           <Text style={styles.teachertext}>Name</Text>
           <Text style={styles.teachertext1}>{data.name}</Text>

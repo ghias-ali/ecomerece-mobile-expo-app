@@ -38,25 +38,25 @@ export default function AboutUs({}) {
 }
 const styles = StyleSheet.create({
   container: {
-    padding: 5
+    padding: 5,
   },
   image155: {
     width: 350,
     borderRadius: 10,
-    alignSelf: "center"
+    alignSelf: "center",
   },
   about: {
     fontSize: 25,
     marginTop: 5,
     textAlign: "center",
-    color: "#303030"
+    color: "#303030",
   },
   about1: {
     fontSize: 18,
     marginTop: 5,
     color: "#F8BF2D",
     textDecorationLine: "underline",
-    padding: 3
+    padding: 3,
   },
   about2: {
     fontSize: 15,
@@ -65,6 +65,6 @@ const styles = StyleSheet.create({
     color: "#5D524F",
     fontWeight: "normal",
     paddingLeft: 3,
-    paddingRight: 3
-  }
+    paddingRight: 3,
+  },
 });

@@ -3,7 +3,6 @@ import {
   SafeAreaView,
   View,
   StyleSheet,
-  Image,
   Text,
   TouchableOpacity,
 } from "react-native";
@@ -11,6 +10,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { addToCart, bookDetail } from "../config/axios";
 import { useSelector, useDispatch } from "react-redux";
 import { setRefreshdata } from "../redux/actions";
+import CacheImage from "./caheimage";
 
 export default function ListItem({
   title,
@@ -63,11 +63,9 @@ export default function ListItem({
     <SafeAreaView>
       <View style={styles.container}>
         <View style={styles.back}>
-          <Image
+          <CacheImage
             style={styles.image}
-            source={{
-              uri: `https://kitabank.studentsresource.net/${image}`,
-            }}
+            uri={`https://kitabank.studentsresource.net/${image}`}
           />
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subTitle}>{subTitle}</Text>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
 import { bookDetail } from "../config/axios";
+import CacheImage from "./caheimage";
 
 export default function ListFav({ bookId, deleteBook, idOfFav }) {
   const [data, setdata] = useState({});
@@ -20,11 +21,9 @@ export default function ListFav({ bookId, deleteBook, idOfFav }) {
     <View style={styles.container}>
       <View style={styles.image44455}>
         <View>
-          <Image
+          <CacheImage
             style={styles.image133}
-            source={{
-              uri: `https://kitabank.studentsresource.net/${data?.image}`,
-            }}
+            uri={`https://kitabank.studentsresource.net/${data?.image}`}
           />
         </View>
         <View>

@@ -204,6 +204,18 @@ subscription.interceptors.request.use(
     return Promise.reject(err);
   }
 );
+
+const getteacherbook = axios.create({
+  baseURL: `${url}/get-teacher-books`,
+});
+getteacherbook.interceptors.request.use(
+  (req) => {
+    return req;
+  },
+  (err) => {
+    return Promise.reject(err);
+  }
+);
 export {
   login,
   bookscat,
@@ -222,4 +234,5 @@ export {
   checkout,
   ordersList,
   subscription,
+  getteacherbook,
 };

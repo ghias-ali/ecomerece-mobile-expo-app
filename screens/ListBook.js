@@ -1,12 +1,13 @@
 import React from "react";
-import { View, StyleSheet, Image, Text, TouchableOpacity } from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import CacheImage from "./caheimage";
 
 export default function ListBook({ title, subTitle, image, onPress, Price }) {
   return (
     <View style={styles.container} onPress={onPress}>
       <View style={styles.image44455}>
         <View>
-          <Image style={styles.image133} source={image} />
+          <CacheImage style={styles.image133} uri={image} />
         </View>
         <View>
           <Text style={styles.title}>{title}</Text>

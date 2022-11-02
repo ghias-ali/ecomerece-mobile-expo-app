@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Image, Text } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { bookDetail } from "../config/axios";
+import CacheImage from "./caheimage";
 
 export default function OrdeListCart({ bookId, status, price }) {
   const [data, setdata] = useState({});
@@ -20,11 +21,9 @@ export default function OrdeListCart({ bookId, status, price }) {
     <View style={styles.container}>
       <View style={styles.image4445}>
         <View>
-          <Image
+          <CacheImage
             style={styles.image133}
-            source={{
-              uri: `https://kitabank.studentsresource.net/${data?.image}`,
-            }}
+            uri={`https://kitabank.studentsresource.net/${data?.image}`}
           />
         </View>
         <View>

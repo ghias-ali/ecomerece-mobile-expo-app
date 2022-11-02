@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { login } from "../config/axios";
 import { setUserData, setLoginState } from "../redux/actions";
 import { useHeaderHeight } from "@react-navigation/elements";
+import CacheImage from "../screens/caheimage";
 
 const screen = Dimensions.get("screen");
 
@@ -86,11 +87,9 @@ function Login({ navigation }) {
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={styles.container}>
-          <Image
+          <CacheImage
             style={styles.logo}
-            source={{
-              uri: "https://kitabank.studentsresource.net/uploads/cms/logo.png",
-            }}
+            uri="https://kitabank.studentsresource.net/uploads/cms/logo.png"
           />
           <View
             style={{

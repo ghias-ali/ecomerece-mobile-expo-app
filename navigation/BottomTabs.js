@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Text, View, TouchableOpacity, Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ProductsPage from "../screens/ProductsPage";
 import CartPage from "../screens/CartPage";
