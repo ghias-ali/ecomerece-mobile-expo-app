@@ -1,8 +1,16 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { FlatList, View, Text, StyleSheet, RefreshControl } from "react-native";
+import {
+  FlatList,
+  View,
+  Text,
+  StyleSheet,
+  RefreshControl,
+  TouchableOpacity,
+} from "react-native";
 import Orderlistcart from "./Orderlistcart";
 import { ordersList } from "../config/axios";
 import { useSelector } from "react-redux";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -20,6 +28,29 @@ export default function OrderList() {
     setRefreshing(true);
     wait(2000).then(() => setRefreshing(false));
   }, []);
+
+  const renderFooter = () => {
+    return (
+      //Footer View with Loader
+      <View style={styles.footer}>
+        {data.length === 0 ? (
+          <View>
+            <Text
+              style={{ textAlign: "center", marginTop: 80, marginBottom: 20 }}
+            >
+              No Data Found
+            </Text>
+            <TouchableOpacity
+              style={{ alignSelf: "center" }}
+              onPress={onRefresh}
+            >
+              <AntDesign name="reload1" size={30} color="black" />
+            </TouchableOpacity>
+          </View>
+        ) : null}
+      </View>
+    );
+  };
 
   useEffect(() => {
     setloading(true);
@@ -52,6 +83,7 @@ export default function OrderList() {
             refreshControl={
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
+            ListFooterComponent={renderFooter}
             showsHorizontalScrollIndicator={false}
             data={data}
             keyExtractor={(data) => data.id.toString()}

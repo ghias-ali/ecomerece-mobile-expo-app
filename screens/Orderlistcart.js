@@ -5,27 +5,34 @@ import CacheImage from "./caheimage";
 
 export default function OrdeListCart({ bookId, status, price }) {
   const [data, setdata] = useState({});
+  const [loading, setloading] = useState(false);
 
   useEffect(() => {
+    setloading(true);
     bookDetail(`${bookId}`, {
       method: "get",
     })
       .then((res) => {
         setdata(res.data.book);
+        setloading(false);
       })
       .catch(() => {
         alert("Book cannot Fetch");
+        setloading(false);
       });
   }, []);
   return (
     <View style={styles.container}>
       <View style={styles.image4445}>
-        <View>
-          <CacheImage
-            style={styles.image133}
-            uri={`https://kitabank.studentsresource.net/${data?.image}`}
-          />
-        </View>
+        {!loading && (
+          <View>
+            <CacheImage
+              style={styles.image133}
+              uri={`https://kitabank.studentsresource.net/${data?.image}`}
+            />
+          </View>
+        )}
+
         <View>
           <Text style={styles.title}>{data?.name}</Text>
           <Text style={styles.subTitle}>{data?.auther}</Text>

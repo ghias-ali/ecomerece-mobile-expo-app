@@ -5,7 +5,6 @@ import {
   View,
   TextInput,
   TouchableOpacity,
-  Image,
   ActivityIndicator,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
@@ -17,6 +16,7 @@ import { login } from "../config/axios";
 import { setUserData, setLoginState } from "../redux/actions";
 import { useHeaderHeight } from "@react-navigation/elements";
 import CacheImage from "../screens/caheimage";
+import * as SecureStore from "expo-secure-store";
 
 const screen = Dimensions.get("screen");
 
@@ -54,6 +54,9 @@ function Login({ navigation }) {
         headers: { "Content-Type": "application/json" },
       })
         .then((res) => {
+          SecureStore.setItemAsync("email", email);
+          SecureStore.setItemAsync("password", password);
+
           setEmail("");
           setPassword("");
           dispatch(setUserData(res.data.user));

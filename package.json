@@ -21,6 +21,8 @@
     "expo-app-loading": "^2.1.0",
     "expo-asset": "^8.6.1",
     "expo-file-system": "^14.1.0",
+    "expo-secure-store": "^11.3.0",
+    "expo-splash-screen": "^0.16.2",
     "expo-status-bar": "~1.2.0",
     "expo-updates": "~0.11.6",
     "form-data": "^4.0.0",

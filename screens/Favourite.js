@@ -1,8 +1,16 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { FlatList, StyleSheet, RefreshControl } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  RefreshControl,
+  TouchableOpacity,
+  View,
+  Text,
+} from "react-native";
 import ListFav from "./ListFav";
 import { getFav, deleteFav } from "../config/axios";
 import { useSelector } from "react-redux";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 const wait = (timeout) => {
   return new Promise((resolve) => setTimeout(resolve, timeout));
@@ -20,6 +28,28 @@ export default function Favourite({ navigation }) {
     wait(2000).then(() => setRefreshing(false));
   }, []);
 
+  const renderFooter = () => {
+    return (
+      //Footer View with Loader
+      <View style={styles.footer}>
+        {data.length === 0 ? (
+          <View>
+            <Text
+              style={{ textAlign: "center", marginTop: 80, marginBottom: 20 }}
+            >
+              No Data Found
+            </Text>
+            <TouchableOpacity
+              style={{ alignSelf: "center" }}
+              onPress={onRefresh}
+            >
+              <AntDesign name="reload1" size={30} color="black" />
+            </TouchableOpacity>
+          </View>
+        ) : null}
+      </View>
+    );
+  };
   const onClickDelete = (id) => {
     deleteFav(`${id}`, {})
       .then(() => {
@@ -43,22 +73,24 @@ export default function Favourite({ navigation }) {
   }, [updated, refreshing, refreshfav]);
 
   return (
-    <RefreshControl refreshing={refreshing} onRefresh={onRefresh}>
-      <FlatList
-        style={styles.list11}
-        showsHorizontalScrollIndicator={false}
-        data={data}
-        keyExtractor={(data) => data.id.toString()}
-        renderItem={({ item }) => (
-          <ListFav
-            bookId={item.book_id}
-            deleteBook={onClickDelete}
-            idOfFav={item.id}
-            navigation={navigation}
-          />
-        )}
-      />
-    </RefreshControl>
+    <FlatList
+      style={styles.list11}
+      showsHorizontalScrollIndicator={false}
+      data={data}
+      keyExtractor={(data) => data.id.toString()}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }
+      ListFooterComponent={renderFooter}
+      renderItem={({ item }) => (
+        <ListFav
+          bookId={item.book_id}
+          deleteBook={onClickDelete}
+          idOfFav={item.id}
+          navigation={navigation}
+        />
+      )}
+    />
   );
 }
 const styles = StyleSheet.create({
